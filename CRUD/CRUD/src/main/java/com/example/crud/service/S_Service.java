@@ -1,0 +1,76 @@
+package com.example.crud.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.example.crud.repository.S_Repository;
+import com.example.crud.student.Student;
+
+@Service
+public class S_Service {
+	@Autowired
+	S_Repository sr;
+	
+//	Save method
+	public Student S_Insert(Student st) {
+		return sr.save(st);
+		
+	}
+	
+//	SaveAll
+	public List<Student> S_Insert2(List<Student> st2) {
+		return sr.saveAll(st2);
+		
+	}
+	
+//	Feindall
+	public List<Student> S_fetch(){
+		return sr.findAll();
+	}
+	
+//	FindById
+	public Student S_fetchby(Integer id) {
+		Optional<Student> e = sr.findById(id);
+	    if(e.isPresent()) {
+	        return e.get();
+	    } else {
+	        throw new RuntimeException("Student ID not found: " + id);
+	    }
+	}
+	
+//	update
+	public String S_updateEntire(Integer id,Student req) {
+		Student st=S_fetchby(id);
+		
+		if (req.getS_name() != null) {
+            st.setS_name(req.getS_name());
+        }
+        if (req.getS_num() != null) {
+            st.setS_num(req.getS_num());
+        }
+		sr.save(st);
+//		return "data is updated";
+		return "Data is partialy updated";
+		
+	}
+	
+//	DeleteAll
+	public String S_delete() {
+		sr.deleteAll();
+		return "All Data is deleted";
+	}
+	
+//	DeleteById
+	public String S_DeleteBy(Integer id) {
+		Student student = sr.findById(id).orElse(null);
+		
+		if (student == null) {
+			return "id not present";
+		}
+		
+		sr.deleteById(id);
+		return "Student deleted successfully";
+	}
+}
