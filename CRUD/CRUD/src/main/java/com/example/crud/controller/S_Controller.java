@@ -41,18 +41,26 @@ public class S_Controller {
 		return S2.S_fetch();	
 	}
 	
+	@GetMapping("fetch/{startId}/{endId}")
+	public Object StudentsBetween(
+            @PathVariable Integer startId, 
+            @PathVariable Integer endId) {
+		    return S2.StudentsBetweenIds(startId, endId);
+
+    }
+	
 	@GetMapping("/FindBy_Id/{id}")
-	public Student S_loadid(@PathVariable Integer id){
-		return S2.S_fetchby(id);
+	public Object S_loadid(@PathVariable Integer id){
+		return S2.S_findbyId(id);
 	}
 	
 //update
 //	@PutMapping("modifie/{id}")
 	@PatchMapping("smallupdate/{id}")
-	public String S_update(@PathVariable Integer id,@RequestBody Student req) {
-		S2.S_updateEntire(id, req);
+	public Object S_update(@PathVariable Integer id,@RequestBody Student req) {
+		return 	S2.S_updateEntire(id, req);
 
-		return "Data is partialy updated";
+		
 	}
 	
 //	Delete
