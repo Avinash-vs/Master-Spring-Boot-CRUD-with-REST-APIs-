@@ -9,10 +9,5 @@ import com.example.crud.student.Student;
 
 public interface S_Repository extends JpaRepository<Student, Integer>{
 
-
-
-
-	
-	
-
+	List<Student> findByIdBetween(Integer startId, Integer endId);
 }
