@@ -1,5 +1,6 @@
 package com.example.crud.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,29 +32,49 @@ public class S_Service {
 	}
 	
 //	FindById
-	public Student S_fetchby(Integer id) {
+//	public Student S_findbymail(Integer mail)
+//	public Student S_findbyAge(Integer age)
+
+	public Object StudentsBetweenIds(Integer startId, Integer endId) {
+		List<Student> students = sr.findByIdBetween(startId, endId);
+	    
+	    if (students != null && !students.isEmpty()) {
+	      return students;
+	    } else {
+	        return "student ID not exists";
+	    }
+    }
+	
+	public Object S_findbyId(Integer id) {
 		Optional<Student> e = sr.findById(id);
 	    if(e.isPresent()) {
 	        return e.get();
 	    } else {
-	        throw new RuntimeException("Student ID not found: " + id);
+	        return "Student ID not found";
 	    }
 	}
 	
 //	update
-	public String S_updateEntire(Integer id,Student req) {
-		Student st=S_fetchby(id);
-		
-		if (req.getS_name() != null) {
-            st.setS_name(req.getS_name());
-        }
-        if (req.getS_num() != null) {
-            st.setS_num(req.getS_num());
-        }
-		sr.save(st);
-//		return "data is updated";
-		return "Data is partialy updated";
-		
+	public Object S_updateEntire(Integer id,Student req) {
+		Optional<Student> stOptional = sr.findById(id);
+
+	    if (stOptional.isPresent()) {
+	        Student st = stOptional.get(); 
+
+	        if (req.getS_name() != null) {
+	            st.setS_name(req.getS_name());
+	        }
+	        if (req.getS_num() != null) {
+	            st.setS_num(req.getS_num());
+	        }
+
+	        sr.save(st);
+	        
+	        return "Data is partially updated";
+	    } else {
+
+	        return "Data does not exist"; 
+	    }
 	}
 	
 //	DeleteAll
