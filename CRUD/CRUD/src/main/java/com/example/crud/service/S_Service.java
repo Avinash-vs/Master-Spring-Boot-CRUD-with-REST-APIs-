@@ -44,7 +44,7 @@ public class S_Service {
 	    }
 	}
 	
-		public Object S_lessthanId(Integer Id) {
+	public Object S_lessthanId(Integer Id) {
 		List<Student> stu = sr.findStudentLessThanIdCustomList(Id);
 		if(stu != null && !stu.isEmpty()) {
 			return stu;
