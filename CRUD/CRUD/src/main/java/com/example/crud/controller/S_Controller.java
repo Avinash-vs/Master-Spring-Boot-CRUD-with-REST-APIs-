@@ -40,6 +40,16 @@ public class S_Controller {
 	public List<Student> S_fetch() {
 		return S2.S_fetch();	
 	}
+
+		@GetMapping("/FindBy_Id/{id}")
+	public Object S_loadid(@PathVariable Integer id){
+		return S2.S_findbyId(id);
+	}
+	
+	@GetMapping("/S_lessthanid/{id}")
+	public Object getS_lessthanId(@PathVariable Integer id) {
+		return S2.S_lessthanId(id);
+	}
 	
 	@GetMapping("fetch/{startId}/{endId}")
 	public Object StudentsBetween(
@@ -48,12 +58,7 @@ public class S_Controller {
 		    return S2.StudentsBetweenIds(startId, endId);
 
     }
-	
-	@GetMapping("/FindBy_Id/{id}")
-	public Object S_loadid(@PathVariable Integer id){
-		return S2.S_findbyId(id);
-	}
-	
+
 //update
 //	@PutMapping("modifie/{id}")
 	@PatchMapping("smallupdate/{id}")
