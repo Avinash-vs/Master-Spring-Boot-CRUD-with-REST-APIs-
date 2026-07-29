@@ -35,6 +35,24 @@ public class S_Service {
 //	public Student S_findbymail(Integer mail)
 //	public Student S_findbyAge(Integer age)
 
+	public Object S_findbyId(Integer id) {
+		Optional<Student> e = sr.findById(id);
+	    if(e.isPresent()) {
+	        return e.get();
+	    } else {
+	        return "Student ID not found";
+	    }
+	}
+	
+		public Object S_lessthanId(Integer Id) {
+		List<Student> stu = sr.findStudentLessThanIdCustomList(Id);
+		if(stu != null && !stu.isEmpty()) {
+			return stu;
+		}else {
+			return "Student Ids are empty";
+		}	
+	}
+
 	public Object StudentsBetweenIds(Integer startId, Integer endId) {
 		List<Student> students = sr.findByIdBetween(startId, endId);
 	    
@@ -44,15 +62,6 @@ public class S_Service {
 	        return "student ID not exists";
 	    }
     }
-	
-	public Object S_findbyId(Integer id) {
-		Optional<Student> e = sr.findById(id);
-	    if(e.isPresent()) {
-	        return e.get();
-	    } else {
-	        return "Student ID not found";
-	    }
-	}
 	
 //	update
 	public Object S_updateEntire(Integer id,Student req) {
